@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -20,13 +21,21 @@ public class TaskService {
     TaskRepository taskRepository;
 
     public void createTask(Task task) {
-        Header header = task.getHeader();
-        headerRepository.save(header);
-        taskRepository.save(task);
+        long header = task.getHeader().getHeaderId();
+        if(headerRepository.existsById(header)) {
+            Optional<Header> header1 =headerRepository.findById(header);
+            task.setHeader(null);
+            taskRepository.save(task);
+        }
+        else taskRepository.save(task);
     }
 
     public List<Task> getAllTask() {
         return taskRepository.findAll();
+    }
+
+    public void deleteTask(long taskId) {
+        taskRepository.deleteById(taskId);
     }
 
     /*public List<Task> getTaskByHeader(String header) {

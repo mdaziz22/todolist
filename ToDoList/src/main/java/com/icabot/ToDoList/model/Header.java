@@ -16,7 +16,7 @@ import java.util.List;
 public class Header {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long headerId;
 
 

@@ -15,10 +15,12 @@ import java.util.Date;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long taskId;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,
+                          CascadeType.REFRESH,
+                          })
     @JoinColumn(name = "header_id", nullable = false)
     private Header header;
 

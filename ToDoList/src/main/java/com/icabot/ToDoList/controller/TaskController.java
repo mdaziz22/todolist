@@ -37,6 +37,12 @@ public class TaskController {
         return taskService.getAllTask();
     }
 
+    @DeleteMapping("/deleteTask/{taskId}")
+    public void deleteTask(@PathVariable long taskId){
+        taskService.deleteTask(taskId);
+
+    }
+
     /*@GetMapping("/getTaskByHeader")
     public List<Task> getTaskByHeader(@RequestParam String header){
         return taskService.getTaskByHeader(header);
