@@ -1,6 +1,8 @@
 package com.icabot.ToDoList.services;
 
-import com.icabot.ToDoList.model.TaskEntity;
+import com.icabot.ToDoList.model.Header;
+import com.icabot.ToDoList.model.Task;
+import com.icabot.ToDoList.repository.HeaderRepository;
 import com.icabot.ToDoList.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,23 +15,21 @@ import java.util.List;
 public class TaskService {
 
     @Autowired
-    private TaskRepository taskRepository;
+    HeaderRepository headerRepository;
+    @Autowired
+    TaskRepository taskRepository;
 
-
-    public void createTask(String header, String task) {
-        taskRepository.save(TaskEntity.builder()
-                .header(header)
-                .task(task)
-                .date(Date.valueOf(LocalDate.now()))
-                .completedTask(false)
-                .build());
+    public void createTask(Task task) {
+        Header header = task.getHeader();
+        headerRepository.save(header);
+        taskRepository.save(task);
     }
 
-    public List<TaskEntity> getAllTask() {
+    public List<Task> getAllTask() {
         return taskRepository.findAll();
     }
 
-    public List<TaskEntity> getTaskByHeader(String header) {
+    /*public List<Task> getTaskByHeader(String header) {
         return taskRepository.findByHeader(header);
-    }
+    }*/
 }

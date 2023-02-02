@@ -1,0 +1,27 @@
+package com.icabot.ToDoList.model;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
+public class Header {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long headerId;
+
+
+    private String header;
+    private Date date;
+    @OneToMany(mappedBy = "header")
+    private List<Task> tasks;
+}
