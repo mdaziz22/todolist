@@ -9,19 +9,21 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-@AllArgsConstructor
+
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-@Builder
+
 public class Header {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long headerId;
-
-
     private String header;
     private Date date;
     @OneToMany(mappedBy = "header")
     private List<Task> tasks;
+
+
 }

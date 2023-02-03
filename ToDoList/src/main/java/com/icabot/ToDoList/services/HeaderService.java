@@ -26,4 +26,8 @@ public class HeaderService {
             taskRepository.save(task);
         }
     }
+
+    public void saveHeader(Header header) {
+        headerRepository.save(header);
+    }
 }
