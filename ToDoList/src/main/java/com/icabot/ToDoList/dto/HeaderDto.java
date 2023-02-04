@@ -1,9 +1,7 @@
 package com.icabot.ToDoList.dto;
 
 import com.icabot.ToDoList.model.Task;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -11,9 +9,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Payload {
+@AllArgsConstructor
+@Builder
+public class HeaderDto {
     private long headerId;
     private String header;
     private Date date;
-    private List<TaskDto> tasksdto;
 }

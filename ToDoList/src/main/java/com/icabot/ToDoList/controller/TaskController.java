@@ -1,5 +1,7 @@
 package com.icabot.ToDoList.controller;
 
+import com.icabot.ToDoList.dto.HeaderDto;
+import com.icabot.ToDoList.dto.TaskDto;
 import com.icabot.ToDoList.model.Header;
 import com.icabot.ToDoList.model.Task;
 import com.icabot.ToDoList.services.HeaderService;
@@ -35,22 +37,26 @@ public class TaskController {
     }*/
 
     @GetMapping("/getAllHeader")
-    public ResponseEntity<List<Header>> getAllTask(){
-        List<Header> listHeader = headerService.getAllHeader();
-
-
-        return ResponseEntity.ok(listHeader);
+    public List<HeaderDto> getAllTask(){
+        List<HeaderDto> listHeader = headerService.getAllHeader();
+        return listHeader;
     }
+
+    @GetMapping("/getTaskByHeaderId/{headerId}")
+    public List<Task> getTaskByHeaderId(@PathVariable long headerId){
+        return null;
+    }
+
     /*@PostMapping("/createTaskWithHeaderId/{headerId}")
     public void createTaskWithHeaderId(@RequestBody Task task){
         taskService.
     }*/
-/*
+
     @DeleteMapping("/deleteTask/{taskId}")
     public void deleteTask(@PathVariable long taskId){
         taskService.deleteTask(taskId);
 
-    }*/
+    }
 
     //this controller creates only the header
     @PostMapping("/createHeader")
@@ -60,7 +66,7 @@ public class TaskController {
 
     //controller that creates task based on the headerId provided by the frontend
     @PostMapping("/createTask/{headerId}")
-    public ResponseEntity<HttpStatus> createTask(@PathVariable long headerId, @RequestBody Task task){
+    public ResponseEntity<HttpStatus> createTask(@PathVariable long headerId, @RequestBody TaskDto task){
 
         boolean resTaskService = taskService.createTask(headerId,task);
         if(resTaskService){

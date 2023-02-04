@@ -9,4 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TaskDto {
     private String task;
+    private Boolean completedTask;
+
 }

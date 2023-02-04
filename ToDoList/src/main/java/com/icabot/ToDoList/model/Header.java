@@ -22,7 +22,9 @@ public class Header {
     private long headerId;
     private String header;
     private Date date;
-    @OneToMany(mappedBy = "header")
+
+    @OneToMany(mappedBy = "header",
+    cascade = CascadeType.ALL)
     private List<Task> tasks;
 
 

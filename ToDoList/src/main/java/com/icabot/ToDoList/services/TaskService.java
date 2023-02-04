@@ -1,5 +1,6 @@
 package com.icabot.ToDoList.services;
 
+import com.icabot.ToDoList.dto.TaskDto;
 import com.icabot.ToDoList.model.Header;
 import com.icabot.ToDoList.model.Task;
 import com.icabot.ToDoList.repository.HeaderRepository;
@@ -23,18 +24,19 @@ public class TaskService {
     @Autowired
     TaskRepository taskRepository;
 
-    public boolean createTask(long headerId,Task task) {
+    public boolean createTask(long headerId, TaskDto task) {
 
 
             Optional<Header> headerFromDb =headerRepository.findById(headerId);
             Task taskSave = new Task();
             taskSave.setHeader(headerFromDb.get());
-            taskSave.setTaskId(task.getTaskId());
+          //  taskSave.setTaskId(task.getTaskId());
             taskSave.setTask(task.getTask());
             taskSave.setCompletedTask(task.getCompletedTask());
            Task resDb =  taskRepository.save(taskSave);
 
         log.info("Task saved in DB with headerId"+headerId);
+        log.info("Task saved : "+resDb);
 
            if(resDb == null){
                return false;
@@ -52,6 +54,12 @@ public class TaskService {
 
     public void deleteTask(long taskId) {
         taskRepository.deleteById(taskId);
+    }
+
+    public List<Task> getTaskByHeaderId(long headerId) throws NullPointerException {
+
+            return null;
+
     }
 
     /*public List<Task> getTaskByHeader(String header) {
