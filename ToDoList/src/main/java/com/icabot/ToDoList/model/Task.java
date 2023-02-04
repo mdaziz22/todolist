@@ -1,17 +1,15 @@
 package com.icabot.ToDoList.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 public class Task {
 
@@ -19,16 +17,17 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long taskId;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,
-                          CascadeType.REFRESH,
-                          })
+    @ManyToOne(cascade = {CascadeType.DETACH
+            , CascadeType.MERGE
+            , CascadeType.PERSIST
+            , CascadeType.REFRESH})
     @JoinColumn(name = "header_id", nullable = false)
+    @JsonIgnore
     private Header header;
 
     private String task;
 
     private Boolean completedTask;
-
 
 
 }

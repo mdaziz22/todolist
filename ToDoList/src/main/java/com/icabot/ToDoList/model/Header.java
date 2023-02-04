@@ -9,11 +9,9 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-
 public class Header {
 
 
@@ -23,8 +21,7 @@ public class Header {
     private String header;
     private Date date;
 
-    @OneToMany(mappedBy = "header",
-    cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "header", cascade = CascadeType.REMOVE)
     private List<Task> tasks;
 
 

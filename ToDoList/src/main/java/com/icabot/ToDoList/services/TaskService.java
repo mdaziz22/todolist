@@ -9,8 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,43 +25,40 @@ public class TaskService {
 
     public boolean createTask(long headerId, TaskDto task) {
 
+        Optional<Header> headerFromDb = headerRepository.findById(headerId);
+        Task taskSave = createNewTask(task, headerFromDb);
+        Task resDb = taskRepository.save(taskSave);
 
-            Optional<Header> headerFromDb =headerRepository.findById(headerId);
-            Task taskSave = new Task();
-            taskSave.setHeader(headerFromDb.get());
-          //  taskSave.setTaskId(task.getTaskId());
-            taskSave.setTask(task.getTask());
-            taskSave.setCompletedTask(task.getCompletedTask());
-           Task resDb =  taskRepository.save(taskSave);
+        log.info("Task saved in DB with headerId" + headerId);
+        log.info("Task saved : " + resDb);
 
-        log.info("Task saved in DB with headerId"+headerId);
-        log.info("Task saved : "+resDb);
-
-           if(resDb == null){
-               return false;
-           }
-           return true;
-
-
-
+        if (resDb == null) {
+            return false;
+        }
+        return true;
     }
 
-    public List<Header> getAllHeader() {
-        List<Task> taskDB = taskRepository.findAll();
-        return taskDB.stream().map(a -> a.getHeader()).collect(Collectors.toList());
+    private static Task createNewTask(TaskDto task, Optional<Header> headerFromDb) {
+        Task taskSave = new Task();
+        taskSave.setHeader(headerFromDb.get());
+        taskSave.setTask(task.getTask());
+        taskSave.setCompletedTask(task.getCompletedTask());
+        return taskSave;
     }
 
     public void deleteTask(long taskId) {
         taskRepository.deleteById(taskId);
     }
 
-    public List<Task> getTaskByHeaderId(long headerId) throws NullPointerException {
-
-            return null;
-
+    public List<TaskDto> getTaskByHeaderId(long headerId) {
+        List<TaskDto> taskDtos = new ArrayList<>();
+        headerRepository.findById(headerId).get().getTasks()
+                .forEach(a -> taskDtos.add(TaskDto.builder()
+                        .taskId(a.getTaskId())
+                        .task(a.getTask())
+                        .completedTask(a.getCompletedTask())
+                        .build()));
+        return taskDtos;
     }
 
-    /*public List<Task> getTaskByHeader(String header) {
-        return taskRepository.findByHeader(header);
-    }*/
 }

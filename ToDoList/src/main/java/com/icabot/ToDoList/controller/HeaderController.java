@@ -1,8 +1,8 @@
 package com.icabot.ToDoList.controller;
 
-import com.icabot.ToDoList.dto.TaskDto;
+import com.icabot.ToDoList.dto.HeaderDto;
 import com.icabot.ToDoList.dto.ValidateDto;
-import com.icabot.ToDoList.services.TaskService;
+import com.icabot.ToDoList.services.HeaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class TaskController {
+public class HeaderController {
 
     @Autowired
-    private TaskService taskService;
+    private HeaderService headerService;
 
     /*
-     * Get all task for a given headerID provided by user
+     * Get all header
      */
-    @GetMapping("/getTaskByHeaderId/{headerId}")
-    public ResponseEntity<List<TaskDto>> getTaskByHeaderId(@PathVariable long headerId) {
+    @GetMapping("/getAllHeader")
+    public ResponseEntity<List<HeaderDto>> getAllTask() {
         try {
-            return new ResponseEntity<>(taskService.getTaskByHeaderId(headerId), HttpStatus.OK);
+            return new ResponseEntity<>(headerService.getAllHeader(), HttpStatus.OK);
         } catch (Exception ex) {
             ex.getStackTrace();
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -30,42 +30,41 @@ public class TaskController {
     }
 
     /*
-     * Delete task for a given taskID provided by user
+     * Creates the header provided by user
      */
-    @DeleteMapping("/deleteTask/{taskId}")
-    public ResponseEntity<ValidateDto> deleteTask(@PathVariable long taskId) {
+    @PostMapping("/createHeader")
+    public ResponseEntity<ValidateDto> createHeader(@RequestBody HeaderDto header) {
         try {
-            taskService.deleteTask(taskId);
+            headerService.saveHeader(header);
             return new ResponseEntity<>(ValidateDto.builder()
-                    .errorMessage("TaskController: Successfully deleted Task with taskId: " + taskId)
+                    .errorMessage("HeaderController: Successfully created Header: " + header)
                     .isSuccess(true)
                     .build(), HttpStatus.OK);
         } catch (Exception ex) {
             ex.getStackTrace();
             return new ResponseEntity<>(ValidateDto.builder()
-                    .errorMessage("TaskController: Failed to Delete Task with taskId: " + taskId)
+                    .errorMessage("HeaderController: Failed to create header: " + header)
                     .isSuccess(false)
                     .build(), HttpStatus.BAD_REQUEST);
         }
-
-
     }
 
     /*
-     * Create task based on the headerId provided by the user
+     *  Deletes header and corresponding tasks associated with it
+     *  using the headerID provided by the user
      */
-    @PostMapping("/createTaskByHeaderId/{headerId}")
-    public ResponseEntity<ValidateDto> createTask(@PathVariable long headerId, @RequestBody TaskDto task) {
+    @DeleteMapping("/deleteHeader/{headerId}")
+    public ResponseEntity<ValidateDto> deleteHeader(@PathVariable long headerId) {
         try {
-            taskService.createTask(headerId, task);
+            headerService.deleteHeader(headerId);
             return new ResponseEntity<>(ValidateDto.builder()
-                    .errorMessage("TaskController: Successfully retrieved Task with taskId: " + task)
+                    .errorMessage("HeaderController: Successfully deleted Header with headerId: " + headerId)
                     .isSuccess(true)
                     .build(), HttpStatus.OK);
         } catch (Exception ex) {
             ex.getStackTrace();
             return new ResponseEntity<>(ValidateDto.builder()
-                    .errorMessage("TaskController: Failed to retrieve Task with taskId: " + task)
+                    .errorMessage("HeaderController: Failed to delete header with headerId: " + headerId)
                     .isSuccess(false)
                     .build(), HttpStatus.BAD_REQUEST);
         }

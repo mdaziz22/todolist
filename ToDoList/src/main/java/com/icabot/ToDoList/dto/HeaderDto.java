@@ -1,10 +1,8 @@
 package com.icabot.ToDoList.dto;
 
-import com.icabot.ToDoList.model.Task;
 import lombok.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
