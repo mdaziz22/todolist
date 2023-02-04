@@ -35,8 +35,11 @@ public class TaskController {
     }*/
 
     @GetMapping("/getAllHeader")
-    public List<Header> getAllTask(){
-        return taskService.getAllHeader();
+    public ResponseEntity<List<Header>> getAllTask(){
+        List<Header> listHeader = headerService.getAllHeader();
+
+
+        return ResponseEntity.ok(listHeader);
     }
     /*@PostMapping("/createTaskWithHeaderId/{headerId}")
     public void createTaskWithHeaderId(@RequestBody Task task){

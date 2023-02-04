@@ -7,6 +7,9 @@ import com.icabot.ToDoList.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class HeaderService {
 
@@ -30,4 +33,6 @@ public class HeaderService {
     public void saveHeader(Header header) {
         headerRepository.save(header);
     }
+
+
 }
