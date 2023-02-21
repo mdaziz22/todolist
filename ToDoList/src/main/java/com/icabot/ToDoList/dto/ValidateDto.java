@@ -1,12 +1,12 @@
 package com.icabot.ToDoList.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class ValidateDto {
 
     private String errorMessage;

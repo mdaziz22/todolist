@@ -22,9 +22,22 @@ public class HeaderController {
      * Get all header
      */
     @GetMapping("/getAllHeader")
-    public ResponseEntity<List<HeaderDto>> getAllTask() {
+    public ResponseEntity<List<HeaderDto>> getAllHeader() {
         try {
             return new ResponseEntity<>(headerService.getAllHeader(), HttpStatus.OK);
+        } catch (Exception ex) {
+            ex.getStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /*
+     * Get all header
+     */
+    @GetMapping("/getAllHeaderByUserId/{userId}")
+    public ResponseEntity<List<HeaderDto>> getAllHeaderByUserId(@PathVariable long userId) {
+        try {
+            return new ResponseEntity<>(headerService.getAllHeaderByUserId(userId), HttpStatus.OK);
         } catch (Exception ex) {
             ex.getStackTrace();
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

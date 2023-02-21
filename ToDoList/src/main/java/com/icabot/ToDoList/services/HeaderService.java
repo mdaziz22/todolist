@@ -53,4 +53,16 @@ public class HeaderService {
         if (!header.isEmpty()) headerRepository.delete(header.get());
         log.info("HeaderService: Deleted header with value: {}", header);
     }
+
+    public List<HeaderDto> getAllHeaderByUserId(long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        List<HeaderDto> headerDto = new ArrayList<>();
+
+        user.get().getHeaderList().stream().forEach(a -> headerDto.add(HeaderDto.builder()
+                        .userId(userId)
+                .headerId(a.getHeaderId())
+                .header(a.getHeader())
+                .date(a.getDate()).build()));
+        return headerDto;
+    }
 }
