@@ -2,7 +2,7 @@ package com.icabot.ToDoList.dto;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -10,6 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class HeaderDto {
+    private long userId;
     private long headerId;
     private String header;
     private Date date;

@@ -3,7 +3,7 @@ package com.icabot.ToDoList.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -21,8 +21,12 @@ public class Header {
     private String header;
     private Date date;
 
-    @OneToMany(mappedBy = "header", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "header",cascade = CascadeType.ALL)
     private List<Task> tasks;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
 }

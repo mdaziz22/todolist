@@ -17,10 +17,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long taskId;
 
-    @ManyToOne(cascade = {CascadeType.DETACH
-            , CascadeType.MERGE
-            , CascadeType.PERSIST
-            , CascadeType.REFRESH})
+    @ManyToOne()
     @JoinColumn(name = "header_id", nullable = false)
     @JsonIgnore
     private Header header;
